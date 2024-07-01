@@ -1,4 +1,4 @@
-﻿; dolpSol Macro
+; dolpSol Macro
 ;   A macro for Sol's RNG on Roblox
 ;   GNU General Public License
 ;   Free for anyone to use
@@ -68,9 +68,9 @@ global potionIndex := {0:"None"
     ,3:"Fortune Potion III"
     ,4:"Haste Potion I"
     ,5:"Haste Potion II"
-    ,6:"Heavenly Potion I"
-    ,7:"Heavenly Potion II"
-    ,8:"Universe Potion I"}
+    ,6:"Haste Potion III"
+    ,7:"Heavenly Potion I"
+    ,8:"Heavenly Potion II"}
 
 
 global craftingInfo := {"Gilded Coin":{slot:13,addSlots:1,maxes:[1],attempts:5,addedAttempts:1}
@@ -81,8 +81,7 @@ global craftingInfo := {"Gilded Coin":{slot:13,addSlots:1,maxes:[1],attempts:5,a
     ,"Haste Potion II":{slot:2,subSlot:2,addSlots:5,maxes:[1,10,10,15,2],attempts:2}
     ,"Haste Potion III":{slot:2,subSlot:3,addSlots:5,maxes:[1,20,15,25,4],attempts:2}
     ,"Heavenly Potion I":{slot:3,subSlot:1,addSlots:4,maxes:[100,50,20,1],attempts:2}
-    ,"Heavenly Potion II":{slot:3,subSlot:2,addSlots:5,maxes:[2,125,75,50,1],attempts:2}
-    ,"Universe Potion I":{slot:4,subSlot:1,addSlots:3,maxes:[10,15,2],attempts:2}}
+    ,"Heavenly Potion II":{slot:3,subSlot:2,addSlots:5,maxes:[2,125,75,50,1],attempts:2}}
 
 global rarityIndex := {0:"None"
     ,1:"1/1k+"
@@ -1013,7 +1012,7 @@ getMenuButtonPosition(num, ByRef posX := "", ByRef posY := ""){ ; num is 1-7, 1 
 
     menuBarVSpacing := 10.5*(height/1080)
     menuBarButtonSize := 58*(width/1920)
-    menuEdgeCenter := [rX + menuBarOffset, rY + (height/2)]
+    menuEdgeCenter := [rX + menuBarOffset, rY + (height/1.9)]
     startPos := [menuEdgeCenter[1]+(menuBarButtonSize/2),menuEdgeCenter[2]+(menuBarButtonSize/4)-(menuBarButtonSize+menuBarVSpacing-1)*3.5] ; final factor = 0.5x (x is number of menu buttons visible to all, so exclude private server button)
     
     posX := startPos[1]
@@ -1638,20 +1637,23 @@ Gui Add, CheckBox, vItemCraftingCheckBox x32 y58 w190 h22 +0x2, % " Automatic It
 Gui Font, s9 w600
 Gui Add, GroupBox, x21 y80 w221 h65 vItemCraftingOptionsGroup -Theme +0x50000007, Crafting Options
 Gui Font, s9 norm
-Gui Add, CheckBox, vCraftGildedCoinCheckBox x37 y98 w190 h22 +0x2, % " Gilded Coin"
+Gui Add, Text, x37 y98 w190 h22 vItemCraftingText BackgroundTrans, Nothing as of now :,(
+; Gui Add, CheckBox, vCraftGildedCoinCheckBox x37 y98 w190 h22 +0x2, % " Gilded Coin" (impossible to create in Era 8 but will keep for future reference)
 
-potionSlotOptions := "None||Fortune Potion I|Haste Potion I|Heavenly Potion I|Universe Potion I|Fortune Potion II|Haste Potion II|Heavenly Potion II|Fortune Potion III"
+potionSlotOptions := "None||Fortune Potion I|Haste Potion I|Heavenly Potion I|Fortune Potion II|Haste Potion II|Heavenly Potion II|Fortune Potion III|Haste Potion III"
 Gui Font, s10 w600
 Gui Add, GroupBox, x252 y40 w231 h170 vPotionCraftingGroup -Theme +0x50000007, Potion Crafting
+Gui Font, s10 w600
+Gui Add, Text, x300 y61 w150 h16 vPotionCraftingStar BackgroundTrans, Stella's star needed!
 Gui Font, s9 norm
-Gui Add, CheckBox, vPotionCraftingCheckBox x268 y58 w200 h22 +0x2, % " Automatic Potion Crafting"
+Gui Add, CheckBox, vPotionCraftingCheckBox x268 y82 w200 h22 +0x2, % " Automatic Potion Crafting"
 Gui Font, s9 w600
-Gui Add, GroupBox, x257 y80 w221 h125 vPotionCraftingSlotsGroup -Theme +0x50000007, Crafting Slots
+Gui Add, GroupBox, x257 y105 w221 h100 vPotionCraftingSlotsGroup -Theme +0x50000007, Crafting Slots
 Gui Font, s9 norm
-Gui Add, Text, x270 y107 w100 h16 vItemCraftingSlot1Header BackgroundTrans, Slot 1:
-Gui Add, DropDownList, x312 y103 w120 h10 vPotionCraftingSlot1DropDown R9, % potionSlotOptions
-Gui Add, Text, x270 y140 w100 h16 vItemCraftingSlot2Header BackgroundTrans, Slot 2:
-Gui Add, DropDownList, x312 y136 w120 h10 vPotionCraftingSlot2DropDown R9, % potionSlotOptions
+Gui Add, Text, x270 y127 w100 h16 vItemCraftingSlot1Header BackgroundTrans, Slot 1:
+Gui Add, DropDownList, x312 y123 w120 h10 vPotionCraftingSlot1DropDown R9, % potionSlotOptions
+Gui Add, Text, x270 y150 w100 h16 vItemCraftingSlot2Header BackgroundTrans, Slot 2:
+Gui Add, DropDownList, x312 y146 w120 h10 vPotionCraftingSlot2DropDown R9, % potionSlotOptions
 Gui Add, Text, x270 y173 w100 h16 vItemCraftingSlot3Header BackgroundTrans, Slot 3:
 Gui Add, DropDownList, x312 y169 w120 h10 vPotionCraftingSlot3DropDown R9, % potionSlotOptions
 
@@ -2195,6 +2197,7 @@ Development
 - Assistant Developer - Stanley (stanleyrekt)
 - Path Contribution - sanji (sir.moxxi), Flash (drflash55)
 - Path Inspiration - Aod_Shanaenae
+- Adjustments for Era 8 - Fio (tdthdjoey/fioretti)
 
 Supporters (Donations)
 
